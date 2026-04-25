@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Delete Account | Oriah</title>
+    <meta
+      name="description"
+      content="Delete-account instructions for Oriah."
+    >
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon-dark-64.png?v=1">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=1">
+    <link rel="stylesheet" href="/site.css?v=20260424">
+    <script src="/delete-account/delete-account.js" type="module" defer></script>
+  </head>
+  <body>
+    <main class="page-shell">
+      <nav class="top-nav top-nav--brand">
+        <a class="nav-brand" href="/">
+          <img class="nav-brand-mark" src="/assets/circle.png" alt="Oriah">
+          <span><strong>Ori</strong>ah</span>
+        </a>
+        <div class="top-links">
+          <a href="/support">Support</a>
+          <a href="/privacy">Privacy</a>
+          <a href="/terms">Terms</a>
+        </div>
+      </nav>
+
+      <article class="legal-panel">
+        <p class="eyebrow">Account</p>
+        <h1>Delete your Oriah account</h1>
+        <p class="lede">
+          If you cannot complete the signed-in in-app flow, use the request
+          form below and we will verify ownership before processing deletion.
+        </p>
+
+        <section class="request-shell" aria-labelledby="delete-request-title">
+          <div class="request-card">
+            <div class="request-copy">
+              <p class="eyebrow">Request form</p>
+              <h2 id="delete-request-title">Request deletion outside the app</h2>
+              <p>
+                Use the email tied to your Oriah account. Optional details help
+                us verify and locate the account faster.
+              </p>
+            </div>
+
+            <form class="request-form" id="delete-request-form" novalidate>
+              <label class="field">
+                <span>Account email</span>
+                <input
+                  id="delete-email"
+                  name="email"
+                  type="email"
+                  autocomplete="email"
+                  inputmode="email"
+                  placeholder="you@example.com"
+                  required
+                >
+              </label>
+
+              <label class="field">
+                <span>Full name</span>
+                <input
+                  id="delete-name"
+                  name="name"
+                  type="text"
+                  autocomplete="name"
+                  placeholder="Your name"
+                >
+              </label>
+
+              <label class="field">
+                <span>User ID or username</span>
+                <input
+                  id="delete-account-id"
+                  name="account_id"
+                  type="text"
+                  placeholder="Optional"
+                >
+              </label>
+
+              <label class="field">
+                <span>Platform</span>
+                <select id="delete-platform" name="platform">
+                  <option value="">Select one</option>
+                  <option value="ios">iPhone / iOS</option>
+                  <option value="android">Android</option>
+                  <option value="web_request_only">Web request only</option>
+                </select>
+              </label>
+
+              <label class="field field--full">
+                <span>Anything else that helps identify the account</span>
+                <textarea
+                  id="delete-details"
+                  name="details"
+                  rows="5"
+                  placeholder="Optional: circle name, church profile, subscription email, last sign-in method, or any other detail that helps us verify the request."
+                ></textarea>
+              </label>
+
+              <div class="request-actions">
+                <button class="button-primary request-submit" type="submit">
+                  Send delete request
+                </button>
+                <p class="request-status" id="delete-request-status" role="status" aria-live="polite"></p>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <h2>How to request deletion</h2>
+        <p>
+          If the signed-in in-app deletion flow is available to you, that is
+          the fastest option. If not, use the request form above and we will
+          follow up if further verification is required.
+        </p>
+
+        <h2>What is deleted</h2>
+        <ul>
+          <li>Account profile data</li>
+          <li>Circle memberships, prayer requests, messages, reactions, and other user-generated community content tied to your account</li>
+          <li>Private journal entries and personal notes stored for your account</li>
+          <li>Uploaded media tied only to the deleted account</li>
+          <li>Notification tokens and account operation metadata</li>
+        </ul>
+
+        <h2>What may be retained</h2>
+        <p>Some limited records may be retained where required for:</p>
+        <ul>
+          <li>Legal compliance</li>
+          <li>Security and fraud prevention</li>
+          <li>Accounting or tax requirements</li>
+          <li>Dispute resolution or legal claims</li>
+        </ul>
+        <p>Current retention windows may include:</p>
+        <ul>
+          <li>Backup copies: up to 35 days</li>
+          <li>Security and abuse logs: up to 12 months</li>
+          <li>Billing, tax, and transaction records: up to 7 years where required</li>
+          <li>Deletion-request audit records: up to 24 months</li>
+          <li>Legal hold or dispute records: until resolved</li>
+        </ul>
+
+        <h2>Deletion timeline</h2>
+        <ul>
+          <li>After successful verification, account access is disabled promptly.</li>
+          <li>Deletion from active systems is generally completed within 30 days.</li>
+        </ul>
+
+        <h2>Subscription notice</h2>
+        <p>
+          Deleting your Oriah account does not automatically cancel App Store
+          or Google Play subscriptions. Store-managed subscriptions must be
+          canceled through your Apple or Google account settings.
+        </p>
+
+        <h2>Support contact</h2>
+        <p>
+          If you need help with the deletion flow, contact
+          <a href="mailto:privacy@joinoriah.com">privacy@joinoriah.com</a>.
+        </p>
+      </article>
+    </main>
+  </body>
+</html>

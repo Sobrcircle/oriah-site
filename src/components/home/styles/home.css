@@ -1,0 +1,995 @@
+/* ─────────────────────────────────────────────
+   Oriah Homepage — premium app landing system
+   ───────────────────────────────────────────── */
+
+/* ─── Page ─── */
+.home-page {
+  --home-text: #e8e4df;
+  --home-muted: #6b6560;
+  --home-accent: #c4a882;
+  --home-bg: #0a0a0a;
+  background: var(--home-bg);
+  color: var(--home-text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Vignette overlay ─── */
+.home-vignette {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 18;
+  background: linear-gradient(to top, rgba(10, 10, 10, 0.35) 0%, rgba(10, 10, 10, 0.08) 12%, transparent 30%);
+}
+
+/* ─── Navigation: top bar ─── */
+.home-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  column-gap: clamp(1.2rem, 3vw, 2.2rem);
+  padding: 0.8rem clamp(1.25rem, 4vw, 3rem);
+  overflow: hidden;
+  background: rgba(10, 10, 10, 0.88);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.home-nav-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--home-text);
+  flex-shrink: 0;
+}
+
+.home-nav-logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  opacity: 0.9;
+  filter: drop-shadow(0 0 14px rgba(255, 245, 224, 0.12));
+}
+
+.home-nav-group {
+  display: flex;
+  align-items: center;
+  gap: clamp(1.2rem, 3vw, 2.2rem);
+}
+
+.home-nav-group--left {
+  justify-content: flex-end;
+}
+
+.home-nav-group--right {
+  justify-content: flex-start;
+}
+
+.home-nav-group a {
+  color: rgba(232, 228, 223, 0.55);
+  text-decoration: none;
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: color 300ms ease;
+  white-space: nowrap;
+}
+
+.home-nav-group a:hover {
+  color: var(--home-accent);
+}
+
+/* ─── Main content ─── */
+.home-main {
+  padding: 0 clamp(1.5rem, 4vw, 4rem);
+  position: relative;
+  z-index: 1;
+}
+
+/* ─── Section base ─── */
+.home-section {
+  position: relative;
+  padding: clamp(5rem, 12vh, 10rem) 0;
+  display: grid;
+  justify-items: center;
+  gap: clamp(2rem, 5vh, 4rem);
+  overflow: visible;
+}
+
+.home-section:first-child {
+  padding-top: clamp(5rem, 10vh, 8rem);
+  padding-bottom: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.5rem, 4vh, 3rem);
+}
+
+/* Section background — subtle warm glow, no SVG textures */
+.home-section-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 60% 40% at 50% 50%, rgba(196, 168, 130, 0.015) 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Section overlay — fully transparent now that seams are handled upstream.
+   Kept as a zero-cost hook in case we want per-section tinting later. */
+.home-section-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ─── Copy container (centered, text-only sections) ─── */
+.home-copy {
+  position: relative;
+  z-index: 2;
+  width: min(560px, calc(100% - 2.4rem));
+  text-align: center;
+  margin-inline: auto;
+}
+
+/* ─── Split layout (text + phone side by side) ─── */
+.home-split {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+  width: min(1060px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.home-section--split {
+  gap: 0;
+}
+
+.home-split-text {
+  text-align: left;
+}
+
+.home-split-phone {
+  display: grid;
+  place-items: center;
+}
+
+/* Reverse: phone on left, text on right */
+.home-section--reverse .home-split-text {
+  order: 2;
+}
+
+.home-section--reverse .home-split-phone {
+  order: 1;
+}
+
+/* ─── Hero branding ─── */
+.home-hero-branding {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+  margin-bottom: clamp(1.2rem, 3vh, 2.5rem);
+}
+
+.home-brand-kicker {
+  margin: 0 0 0.9rem;
+  color: var(--home-accent);
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.home-logo {
+  width: clamp(74px, 9vw, 108px);
+  height: clamp(74px, 9vw, 108px);
+  object-fit: contain;
+  filter: drop-shadow(0 0 20px rgba(255, 245, 224, 0.16)) drop-shadow(0 0 40px rgba(196, 168, 130, 0.08)) drop-shadow(0 12px 32px rgba(0, 0, 0, 0.6));
+  margin-bottom: 0.7rem;
+}
+
+.home-brand {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(2.9rem, 7vw, 5.2rem);
+  line-height: 0.94;
+  letter-spacing: 0.01em;
+  color: rgba(242, 237, 230, 0.96);
+  text-shadow: 0 0 28px rgba(255, 245, 224, 0.05);
+}
+
+.home-tagline {
+  margin: 0.85rem 0 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: clamp(0.9rem, 1.35vw, 1.08rem);
+  color: rgba(232, 228, 223, 0.48);
+  letter-spacing: 0.04em;
+}
+
+.home-pronunciation {
+  margin: 0.55rem 0 0;
+  color: rgba(232, 228, 223, 0.42);
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* Hero divider */
+.home-hero-divider {
+  width: 64px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(196, 168, 130, 0.35), transparent);
+  margin: 0 auto clamp(1.2rem, 3vh, 2rem);
+  animation: dividerReveal 2s ease-out 1.2s both;
+}
+
+@keyframes dividerReveal {
+  from { width: 0; opacity: 0; }
+  to { width: 64px; opacity: 1; }
+}
+
+/* Hero copy lines */
+.home-hero-line {
+  margin: 0 0 0.5rem;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+  font-weight: 400;
+  line-height: 1.7;
+  letter-spacing: 0.02em;
+  color: rgba(232, 228, 223, 0.6);
+}
+
+/* Scroll hint */
+.home-scroll-hint {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  padding-top: 0;
+}
+
+.home-scroll-hint-line {
+  width: min(80px, 16vw);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(196, 168, 130, 0.35), transparent);
+  animation: scrollPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.7); }
+  50% { opacity: 0.7; transform: scaleY(1); }
+}
+
+/* ─── Section titles ─── */
+.home-title {
+  margin: 0 0 1.4rem;
+  font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: clamp(0.72rem, 1vw, 0.85rem);
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  line-height: 1.05;
+  text-transform: uppercase;
+  color: var(--home-accent);
+  text-shadow: 0 0 30px rgba(196, 168, 130, 0.1);
+}
+
+.home-title--book {
+  font-family: 'Times New Roman', Times, serif;
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0.06em;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  color: var(--home-accent);
+  text-shadow: 0 0 30px rgba(196, 168, 130, 0.1);
+}
+
+/* ─── Paragraphs ─── */
+.home-paragraph {
+  margin: 0 0 1.1rem;
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  font-size: clamp(0.92rem, 1.05vw, 1.02rem);
+  font-weight: 400;
+  line-height: 1.85;
+  letter-spacing: 0.01em;
+  color: rgba(232, 228, 223, 0.72);
+}
+
+.home-paragraph--callout {
+  color: var(--home-accent);
+  font-weight: 500;
+}
+
+/* ─── Accent & callout spans ─── */
+.home-accent {
+  color: var(--home-accent);
+  font-weight: 500;
+  text-shadow: 0 0 20px rgba(196, 168, 130, 0.2);
+}
+
+.home-callout {
+  color: var(--home-accent);
+  font-weight: 500;
+  text-shadow: 0 0 20px rgba(196, 168, 130, 0.2);
+}
+
+/* ─── Signature ─── */
+.home-signature {
+  margin: 1.2rem 0 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--home-muted);
+  letter-spacing: 0.03em;
+}
+
+/* ─── Phone mockup ─── */
+.home-phone-wrap {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  perspective: 1200px;
+}
+
+/* Subtle warm glow behind phone — breathing.
+   Restored to the pre-cinematic feel: a soft, low-alpha bloom contained
+   within the phone footprint (positive inset) so nothing spills into
+   neighboring sections. */
+.home-phone-wrap::before {
+  content: '';
+  position: absolute;
+  inset: 10% 15%;
+  background: radial-gradient(ellipse at center, rgba(196, 168, 130, 0.075) 0%, transparent 70%);
+  filter: blur(40px);
+  pointer-events: none;
+  z-index: -1;
+  animation: phoneGlow 6s ease-in-out infinite;
+}
+
+@keyframes phoneGlow {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.08); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-phone-wrap::before { animation: none; opacity: 0.8; }
+}
+
+.home-phone-shell {
+  width: clamp(240px, 28vw, 310px);
+  max-width: 100%;
+  border-radius: 44px;
+  background: #0a0a0a;
+  border: none;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.3),
+    0 16px 32px rgba(0, 0, 0, 0.4),
+    0 32px 64px rgba(0, 0, 0, 0.3),
+    0 0 60px rgba(196, 168, 130, 0.075),
+    0 0 120px rgba(196, 168, 130, 0.0375);
+  padding: 8px;
+  transform: rotateX(2deg);
+  transition: transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.home-phone-shell:hover {
+  transform: rotateX(0deg) translateY(-4px);
+  border-color: rgba(196, 168, 130, 0.12);
+}
+
+.home-phone-screen {
+  width: 100%;
+  border-radius: 36px;
+  overflow: hidden;
+  background: #0a0a0a;
+  line-height: 0;
+}
+
+.home-phone-screen img {
+  width: 100%;
+  height: auto;
+  display: block;
+  /* Reserve the image's vertical footprint before it loads so lazy-loaded
+     phones below the fold don't shift layout as they arrive. Without this,
+     ScrollTriggers below a not-yet-loaded phone are created against a
+     shorter page and fire their onEnter prematurely when the image pops
+     in and pushes sections down. */
+  aspect-ratio: 9 / 19.5;
+}
+
+/* Split layout phone: subtle tilt toward text */
+.home-section--split:not(.home-section--reverse) .home-phone-shell {
+  transform: rotateY(-4deg) rotateX(2deg);
+}
+.home-section--split:not(.home-section--reverse) .home-phone-shell:hover {
+  transform: rotateY(-1deg) rotateX(0deg) translateY(-4px);
+}
+
+.home-section--reverse .home-phone-shell {
+  transform: rotateY(4deg) rotateX(2deg);
+}
+.home-section--reverse .home-phone-shell:hover {
+  transform: rotateY(1deg) rotateX(0deg) translateY(-4px);
+}
+
+/* ─── Section divider ─── */
+.home-section + .home-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 64px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(196, 168, 130, 0.35), transparent);
+  z-index: 3;
+}
+
+/* Hide scroll hint since section dividers handle transitions */
+.home-scroll-hint {
+  display: none;
+}
+
+/* ─── Footer ─── */
+.home-footer {
+  position: relative;
+  z-index: 2;
+  padding: clamp(2rem, 6vh, 4rem) clamp(1rem, 3vw, 3rem) clamp(2.4rem, 6vh, 4rem);
+}
+
+.home-footer-inner {
+  width: min(800px, 100%);
+  margin: 0 auto;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding-top: 1.6rem;
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+  text-align: center;
+}
+
+.home-footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.home-footer-logo {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 16px rgba(255, 245, 224, 0.12)) drop-shadow(0 6px 14px rgba(0, 0, 0, 0.4));
+  opacity: 0.7;
+}
+
+.home-footer-name {
+  margin: 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: 1.18rem;
+  line-height: 1;
+  color: rgba(242, 237, 230, 0.78);
+  letter-spacing: 0.01em;
+}
+
+.home-footer-tagline {
+  margin: 0.2rem 0 0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  color: rgba(232, 228, 223, 0.35);
+  font-size: 0.75rem;
+  letter-spacing: 0.03em;
+}
+
+.home-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem 1.2rem;
+  justify-content: center;
+}
+
+.home-footer-links a {
+  color: rgba(232, 228, 223, 0.4);
+  text-decoration: none;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 300ms ease;
+}
+
+.home-footer-links a:hover {
+  color: rgba(232, 228, 223, 0.75);
+}
+
+.home-footer-note {
+  margin: 0;
+  max-width: 540px;
+  color: rgba(232, 228, 223, 0.25);
+  font-size: 0.7rem;
+  line-height: 1.6;
+}
+
+.home-footer-credit {
+  margin: 0;
+  color: rgba(232, 228, 223, 0.15);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ─── Tablet: collapse split to single column ─── */
+@media (max-width: 1100px) {
+  .home-copy {
+    width: min(480px, calc(100% - 2rem));
+  }
+
+  .home-split {
+    grid-template-columns: 1fr;
+    gap: clamp(2rem, 5vh, 3.5rem);
+    max-width: 560px;
+  }
+
+  .home-split-text {
+    text-align: center;
+  }
+
+  .home-section--reverse .home-split-text {
+    order: 1;
+  }
+
+  .home-section--reverse .home-split-phone {
+    order: 2;
+  }
+
+  .home-phone-shell {
+    width: clamp(260px, 42vw, 320px);
+  }
+
+  .home-section--split:not(.home-section--reverse) .home-phone-shell,
+  .home-section--reverse .home-phone-shell {
+    transform: rotateX(2deg);
+  }
+
+  .home-section--split:not(.home-section--reverse) .home-phone-shell:hover,
+  .home-section--reverse .home-phone-shell:hover {
+    transform: rotateX(0deg) translateY(-4px);
+  }
+
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 700px) {
+  .home-nav {
+    padding: 0.6rem 0.75rem;
+    padding-right: max(0.75rem, env(safe-area-inset-right, 0.75rem));
+  }
+
+  .home-nav {
+    column-gap: 0.9rem;
+  }
+
+  .home-nav-logo {
+    width: 26px;
+    height: 26px;
+  }
+
+  .cursor-glow {
+    top: 23px;
+    /* Mobile Safari is flaky with mix-blend-mode on fixed elements.
+       Drop the blend mode AND lift the halo above .home-main (z:1)
+       so it actually paints on the page. pointer-events: none keeps
+       scroll/tap passthrough. Still below the nav (z:20). */
+    z-index: 15;
+    mix-blend-mode: normal;
+    background: radial-gradient(
+      circle,
+      rgba(196, 168, 130, 0.18) 0%,
+      rgba(196, 168, 130, 0.07) 40%,
+      transparent 70%
+    );
+  }
+
+  .home-nav-group {
+    gap: 0.9rem;
+  }
+
+  .home-nav-group a {
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+  }
+
+  .home-copy {
+    width: min(84vw, 400px);
+  }
+
+  .home-hero-line {
+    font-size: clamp(0.88rem, 3.85vw, 1.15rem);
+  }
+
+  .home-paragraph {
+    font-size: clamp(0.9rem, 3.8vw, 1rem);
+    line-height: 1.8;
+  }
+
+  .home-phone-shell {
+    width: clamp(260px, 70vw, 320px);
+    border-radius: 42px;
+    padding: 7px;
+  }
+
+  .home-phone-screen {
+    border-radius: 34px;
+  }
+
+  .home-section {
+    padding: clamp(4.5rem, 10vh, 7rem) 0;
+  }
+
+  .home-section:first-child {
+    min-height: auto;
+    padding-top: clamp(5rem, 12vh, 7rem);
+    padding-bottom: clamp(3rem, 7vh, 5rem);
+  }
+}
+
+/* ─── Very narrow screens: keep 4 nav labels visible ─── */
+@media (max-width: 380px) {
+  .home-nav {
+    column-gap: 0.7rem;
+  }
+
+  .home-nav-group {
+    gap: 0.7rem;
+  }
+
+  .home-nav-group a {
+    font-size: 0.72rem;
+  }
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  [data-animate] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+    transition: none !important;
+  }
+
+  .home-phone-shell {
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ─── Smooth scroll ─── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─── Scrollbar: hidden on mobile, thin overlay on desktop ─── */
+html::-webkit-scrollbar {
+  width: 0;
+  display: none;
+}
+html {
+  scrollbar-width: none;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+}
+
+/* Desktop: show thin scrollbar */
+@media (min-width: 701px) {
+  html::-webkit-scrollbar {
+    width: 6px;
+    display: block;
+    background: transparent;
+  }
+  html::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 3px;
+  }
+  html::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.22);
+  }
+  html::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.12) transparent;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Cinematic layer — experimental
+   Film grain · cursor glow · preloader · split reveal · magnetic
+   ════════════════════════════════════════════════════════════════ */
+
+/* ── Film grain overlay (subtle print texture) ── */
+.film-grain {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+}
+.film-grain svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Top-anchored warm halo (desktop + mobile).
+   Sits just above/behind the logo line — content scrolls underneath it
+   so sections light up as they pass through the halo. ── */
+.cursor-glow {
+  position: fixed;
+  top: 27px;
+  left: 50%;
+  width: 120vw;
+  height: 650px;
+  margin-left: -60vw;
+  margin-top: -325px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(196, 168, 130, 0.13) 0%,
+    rgba(196, 168, 130, 0.04) 40%,
+    transparent 70%
+  );
+  mix-blend-mode: screen;
+}
+@media (prefers-reduced-motion: reduce) {
+  .cursor-glow { display: none; }
+}
+
+/* ── Preloader ── */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: #0a0a0a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+.preloader-line {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  font-size: clamp(1.1rem, 2.8vw, 1.6rem);
+  color: var(--home-text, #e8e4df);
+  text-align: center;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
+  opacity: 0;
+  will-change: opacity, transform, filter;
+  padding: 0 2rem;
+}
+
+/* ── Split-reveal characters ── */
+.split-word {
+  display: inline-block;
+  white-space: nowrap; /* keep word intact, break between words */
+}
+.split-char {
+  display: inline-block;
+  will-change: opacity, transform, filter;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   WAVE 2 + 3: motion & sensory layer
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Scroll progress bar (thin gold rail at very top) ── */
+.home-scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 60;
+  background: rgba(255, 255, 255, 0.04);
+  pointer-events: none;
+}
+.home-scroll-progress-bar {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    rgba(196, 168, 130, 0.3) 0%,
+    rgba(214, 190, 156, 0.9) 50%,
+    rgba(196, 168, 130, 0.3) 100%
+  );
+  transform-origin: left center;
+  transform: scaleX(0);
+  box-shadow: 0 0 10px rgba(214, 190, 156, 0.4);
+}
+
+/* ── Ambient particles (canvas) ── */
+.home-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  opacity: 0.55;
+  mix-blend-mode: screen;
+}
+@media (prefers-reduced-motion: reduce) {
+  .home-particles { display: none; }
+}
+
+/* ── Sound toggle (bottom-right, subtle) ── */
+.home-sound-toggle {
+  position: fixed;
+  bottom: clamp(1rem, 3vw, 1.6rem);
+  right: clamp(1rem, 3vw, 1.6rem);
+  z-index: 50;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(196, 168, 130, 0.25);
+  background: rgba(10, 10, 10, 0.55);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 300ms ease, background 300ms ease, transform 300ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.home-sound-toggle:hover {
+  border-color: rgba(214, 190, 156, 0.6);
+  background: rgba(20, 18, 14, 0.7);
+  transform: scale(1.05);
+}
+.home-sound-toggle-bars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  height: 14px;
+}
+.home-sound-toggle-bars span {
+  display: block;
+  width: 2px;
+  height: 4px;
+  background: rgba(214, 190, 156, 0.6);
+  border-radius: 1px;
+  transition: background 300ms ease;
+}
+.home-sound-toggle.is-on .home-sound-toggle-bars span {
+  background: rgba(214, 190, 156, 1);
+  animation: soundBars 1.2s ease-in-out infinite;
+}
+.home-sound-toggle.is-on .home-sound-toggle-bars span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.home-sound-toggle.is-on .home-sound-toggle-bars span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes soundBars {
+  0%, 100% { height: 4px; }
+  50%      { height: 12px; }
+}
+@media (max-width: 700px) {
+  .home-sound-toggle { width: 36px; height: 36px; }
+}
+
+/* ── Route curtain (fade to black on internal navigation) ── */
+.home-route-curtain {
+  position: fixed;
+  inset: 0;
+  background: #0a0a0a;
+  z-index: 90;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 500ms cubic-bezier(0.7, 0, 0.3, 1);
+}
+.home-route-curtain.is-leaving {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Link underline draw-in on paragraphs ── */
+.home-paragraph a,
+.home-hero-line a {
+  position: relative;
+  color: var(--home-accent, #c4a882);
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-size 420ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.home-paragraph a:hover,
+.home-hero-line a:hover {
+  background-size: 100% 1px;
+}
+
+/* ── Tap ripple on icon buttons (mobile) ── */
+@media (hover: none) {
+  .home-sound-toggle {
+    overflow: hidden;
+    position: relative;
+  }
+  .home-sound-toggle::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    margin: auto;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(214, 190, 156, 0.4);
+    transform: scale(0);
+    opacity: 0;
+    pointer-events: none;
+  }
+  .home-sound-toggle:active::after {
+    animation: tapRipple 500ms ease-out;
+  }
+}
+@keyframes tapRipple {
+  0%   { transform: scale(0);  opacity: 0.6; }
+  100% { transform: scale(40); opacity: 0; }
+}
+
+/* ── 3D phone tilt perspective support ── */
+/* perspective alone gives the rotateX tilt its depth. preserve-3d is
+   intentionally omitted: putting the ::before glow into shared 3D space
+   with the tilted shell caused a horizontal clip line across the phone. */
+.home-phone-wrap {
+  perspective: 1200px;
+}
+
+/* ── Phone subtle glow on hover (desktop) ── */
+@media (hover: hover) {
+  .home-phone-shell {
+    transition: box-shadow 600ms ease, transform 600ms ease;
+  }
+  .home-phone-wrap:hover .home-phone-shell {
+    box-shadow:
+      0 30px 80px rgba(0, 0, 0, 0.6),
+      0 0 60px rgba(196, 168, 130, 0.12);
+  }
+}
