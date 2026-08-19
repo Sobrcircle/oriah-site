@@ -27,10 +27,16 @@ if (form instanceof HTMLFormElement) {
     const platformInput = document.getElementById('delete-platform')
     const detailsInput = document.getElementById('delete-details')
 
+    // 2026-08-18 — posts to our own /api/delete-account instead of
+    // formsubmit.co. Two reasons: joinoriah.com has no MX records, so mail to
+    // privacy@joinoriah.com could never arrive and every request submitted
+    // here was silently dropped while the page said "Request sent"; and it
+    // handed a third party the exact data class the request is about.
+    // Server builds the message body now — the client only reports fields.
     const payload = {
       email: cleanEmail,
       name: nameInput instanceof HTMLInputElement ? nameInput.value.trim() : '',
-      account_id:
+      accountId:
         accountIdInput instanceof HTMLInputElement
           ? accountIdInput.value.trim()
           : '',
@@ -42,33 +48,17 @@ if (form instanceof HTMLFormElement) {
         detailsInput instanceof HTMLTextAreaElement
           ? detailsInput.value.trim()
           : '',
-      _subject: 'Oriah Delete Account Request',
-      _captcha: 'false',
-      message: [
-        'Delete-account request submitted from joinoriah.com/delete-account.',
-        `Account email: ${cleanEmail}`,
-        `Full name: ${nameInput instanceof HTMLInputElement ? nameInput.value.trim() || 'Not provided' : 'Not provided'}`,
-        `User ID or username: ${accountIdInput instanceof HTMLInputElement ? accountIdInput.value.trim() || 'Not provided' : 'Not provided'}`,
-        `Platform: ${platformInput instanceof HTMLSelectElement ? platformInput.value.trim() || 'Not provided' : 'Not provided'}`,
-        `Details: ${detailsInput instanceof HTMLTextAreaElement ? detailsInput.value.trim() || 'Not provided' : 'Not provided'}`,
-      ].join('\n'),
     }
 
     submitButton?.setAttribute('disabled', 'disabled')
     setStatus('Sending request...', 'muted')
 
     try {
-      const response = await fetch(
-        'https://formsubmit.co/ajax/privacy@joinoriah.com',
-        {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Accept: 'application/json',
-          },
-          body: JSON.stringify(payload),
-        },
-      )
+      const response = await fetch('/api/delete-account', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      })
 
       if (!response.ok) {
         throw new Error('Request failed')
@@ -81,7 +71,7 @@ if (form instanceof HTMLFormElement) {
       )
     } catch {
       setStatus(
-        'Could not send the request right now. Email privacy@joinoriah.com if this continues.',
+        'Could not send the request right now. Email oriah@moradilabs.com if this continues.',
         'error',
       )
     } finally {

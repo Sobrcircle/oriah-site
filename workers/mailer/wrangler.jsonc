@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "oriah-mailer",
+  "main": "src/index.js",
+  "compatibility_date": "2026-08-18",
+
+  // Cloudflare Email Sending. A binding, not an API key — there is no secret
+  // to store, rotate, or leak, which is the entire reason this Worker exists
+  // instead of a Resend call straight from the Pages Function.
+  //
+  // `joinoriah.com` has to be onboarded once before the first send:
+  //     npx wrangler email sending enable joinoriah.com
+  "send_email": [{ "name": "EMAIL" }],
+
+  // Deliberately NO `routes` and NO `workers_dev`. This Worker is reachable
+  // only through the Pages Service binding, so it has no public URL to find,
+  // rate-limit, or abuse. A mail sender with an open endpoint is an open
+  // relay waiting to be discovered.
+  "workers_dev": false,
+
+  "observability": { "enabled": true }
+}
