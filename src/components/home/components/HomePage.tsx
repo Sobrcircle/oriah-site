@@ -5,6 +5,7 @@ import { useLenis } from '../hooks/useLenis'
 import { useSplitReveal } from '../hooks/useSplitReveal'
 import HeroSection from './HeroSection'
 import FeatureSection from './FeatureSection'
+import BetaSection from './BetaSection'
 import SiteNav from './SiteNav'
 import SiteFooter from './SiteFooter'
 import FilmGrain from './FilmGrain'
@@ -39,6 +40,15 @@ export default function HomePage() {
         {sections.map((section) => {
           if (section.type === 'hero') {
             return <HeroSection key={section.id} section={section} />
+          }
+
+          if (section.type === 'beta') {
+            // Deliberately outside the alternating-side rhythm. The signup is
+            // the only place on the page asking for something rather than
+            // explaining something, so it gets its own centred layout and
+            // does not advance `featureIndex` — otherwise it would flip the
+            // side every section after it lands on.
+            return <BetaSection key={section.id} section={section} />
           }
 
           const reverse = featureIndex % 2 === 1

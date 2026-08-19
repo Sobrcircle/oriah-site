@@ -27,7 +27,17 @@ export default function FeatureSection({ section, reverse }: Props) {
 
       <div className={hasPhone ? 'home-split' : 'home-copy'}>
         <div className={hasPhone ? 'home-split-text' : undefined}>
+          {section.kicker && (
+            <span className="home-kicker" data-animate data-delay="0.05">{section.kicker}</span>
+          )}
+
+          {/* `data-split` drives a per-character reveal, so the badge sits
+              outside the h2 rather than inside its animated text — a
+              disclosure that assembles letter by letter reads as decoration. */}
           <h2 className="home-title" data-split data-animate data-delay="0.1">{section.title}</h2>
+          {section.upcoming && (
+            <span className="home-upcoming" data-animate data-delay="0.15">Not shipped yet</span>
+          )}
 
           {section.content.map((paragraph, i) => (
             <p

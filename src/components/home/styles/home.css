@@ -993,3 +993,225 @@ html {
       0 0 60px rgba(196, 168, 130, 0.12);
   }
 }
+
+/* ─────────────────────────────────────────────
+   Section kicker + upcoming badge
+   Added 2026-08-18. The kicker names the surface inside the app ("Word",
+   "Reflect") so the page and the product use one vocabulary — a reader who
+   scrolls past "Reflect" here should recognise the tab when they open it.
+   ───────────────────────────────────────────── */
+.home-kicker {
+  display: block;
+  margin: 0 0 0.7rem;
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: rgba(232, 228, 223, 0.32);
+}
+
+/* Honesty marker for anything not shipped. Deliberately quiet — it is a
+   disclosure, not a promotion. */
+.home-upcoming {
+  display: inline-block;
+  margin-left: 0.6rem;
+  padding: 0.18rem 0.5rem;
+  border: 1px solid rgba(196, 168, 130, 0.32);
+  border-radius: 999px;
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(196, 168, 130, 0.75);
+  vertical-align: middle;
+}
+
+/* ─────────────────────────────────────────────
+   Nav call to action
+   ───────────────────────────────────────────── */
+.home-nav-cta {
+  padding: 0.42rem 0.95rem;
+  border: 1px solid rgba(196, 168, 130, 0.38);
+  border-radius: 999px;
+  color: var(--home-accent) !important;
+  transition: background-color 320ms ease, border-color 320ms ease, color 320ms ease;
+}
+
+.home-nav-cta:hover {
+  background: rgba(196, 168, 130, 0.12);
+  border-color: rgba(196, 168, 130, 0.6);
+}
+
+/* ─────────────────────────────────────────────
+   Beta signup
+   Centred and narrow on purpose: it is the one section that asks rather than
+   explains, so it breaks the left/right rhythm the feature sections keep.
+   ───────────────────────────────────────────── */
+.home-beta-copy {
+  max-width: 40rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.home-beta-form {
+  margin: 2.2rem 0 0;
+}
+
+/* Visible to screen readers, redundant next to the placeholder for everyone
+   else. The field is unmistakable; the label is for the people who cannot
+   see that. */
+.home-beta-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.home-beta-row {
+  display: flex;
+  gap: 0.6rem;
+  align-items: stretch;
+  max-width: 30rem;
+  margin: 0 auto;
+}
+
+.home-beta-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  padding: 0.95rem 1.1rem;
+  background: rgba(232, 228, 223, 0.04);
+  border: 1px solid rgba(232, 228, 223, 0.14);
+  border-radius: 0.7rem;
+  color: var(--home-text);
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  /* 16px floor. Anything smaller and iOS Safari zooms the whole page on
+     focus, which throws the layout and cannot be undone by pinching back. */
+  font-size: 1rem;
+  letter-spacing: 0.01em;
+  transition: border-color 300ms ease, background-color 300ms ease;
+}
+
+.home-beta-input::placeholder {
+  color: rgba(232, 228, 223, 0.3);
+}
+
+.home-beta-input:focus {
+  outline: none;
+  border-color: rgba(196, 168, 130, 0.55);
+  background: rgba(232, 228, 223, 0.06);
+}
+
+.home-beta-input:focus-visible {
+  box-shadow: 0 0 0 3px rgba(196, 168, 130, 0.18);
+}
+
+.home-beta-input[aria-invalid='true'] {
+  border-color: rgba(214, 120, 100, 0.6);
+}
+
+.home-beta-input:disabled {
+  opacity: 0.55;
+}
+
+.home-beta-button {
+  flex: 0 0 auto;
+  padding: 0.95rem 1.6rem;
+  background: var(--home-accent);
+  border: 1px solid var(--home-accent);
+  border-radius: 0.7rem;
+  color: #0a0a0a;
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: transform 240ms ease, background-color 300ms ease, opacity 300ms ease;
+}
+
+.home-beta-button:hover:not(:disabled) {
+  background: #d4bb96;
+  transform: translateY(-1px);
+}
+
+.home-beta-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.home-beta-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.home-beta-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(196, 168, 130, 0.35);
+}
+
+/* Off-screen rather than display:none — a bot reading the DOM sees a real,
+   focusable field, which is the entire point of a honeypot. */
+.home-beta-honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Always in the DOM holding a non-breaking space, so the form does not jump
+   by a line the first time a message appears. */
+.home-beta-message {
+  min-height: 1.4rem;
+  margin: 0.9rem 0 0;
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.01em;
+  color: rgba(232, 228, 223, 0.55);
+}
+
+.home-beta-message.is-error {
+  color: #d67864;
+}
+
+.home-beta-message.is-done {
+  color: var(--home-accent);
+}
+
+.home-beta-fineprint {
+  margin: 1.4rem auto 0;
+  max-width: 26rem;
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--home-muted);
+}
+
+@media (max-width: 34rem) {
+  .home-beta-row {
+    flex-direction: column;
+  }
+
+  .home-beta-button {
+    width: 100%;
+  }
+}
+
+/* The button's lift and the input's colour shifts are decoration. Someone who
+   has asked the OS to stop animating things has asked for this too. */
+@media (prefers-reduced-motion: reduce) {
+  .home-beta-button,
+  .home-beta-input,
+  .home-nav-cta {
+    transition: none;
+  }
+
+  .home-beta-button:hover:not(:disabled) {
+    transform: none;
+  }
+}
