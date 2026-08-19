@@ -35,6 +35,10 @@ const SUBJECT = 'Beta request'
 // failure than turning away a real person over an unusual TLD.
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
+// 503, not 502. Cloudflare's edge replaces a 502 from a Function with its own
+// HTML error page, so the JSON body never reaches the browser and the form
+// falls back to a generic message instead of showing what actually happened.
+// 503 passes through untouched.
 const json = (status, body) =>
   new Response(JSON.stringify(body), {
     status,
@@ -115,11 +119,11 @@ async function sendViaBinding(env, email, meta) {
 
     if (!res.ok) {
       console.error(`[beta] mailer returned ${res.status}`)
-      return json(502, { error: 'Could not send that. Please try again.' })
+      return json(503, { error: 'Could not send that. Please try again.' })
     }
   } catch (err) {
     console.error('[beta] mailer binding failed:', err)
-    return json(502, { error: 'Could not send that. Please try again.' })
+    return json(503, { error: 'Could not send that. Please try again.' })
   }
 
   return json(200, { ok: true })
@@ -149,11 +153,11 @@ async function sendViaResend(env, email, meta) {
     if (!res.ok) {
       const detail = await res.text().catch(() => '')
       console.error(`[beta] Resend returned ${res.status}: ${detail}`)
-      return json(502, { error: 'Could not send that. Please try again.' })
+      return json(503, { error: 'Could not send that. Please try again.' })
     }
   } catch (err) {
     console.error('[beta] Resend send failed:', err)
-    return json(502, { error: 'Could not send that. Please try again.' })
+    return json(503, { error: 'Could not send that. Please try again.' })
   }
 
   return json(200, { ok: true })

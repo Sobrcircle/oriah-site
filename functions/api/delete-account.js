@@ -32,6 +32,10 @@ const SUBJECT = 'Account deletion request'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/
 
+// 503, not 502. Cloudflare's edge replaces a 502 from a Function with its own
+// HTML error page, so the JSON body never reaches the browser and the form
+// falls back to a generic message instead of showing what actually happened.
+// 503 passes through untouched.
 const json = (status, body) =>
   new Response(JSON.stringify(body), {
     status,
@@ -98,7 +102,7 @@ export async function onRequest(context) {
       mailerFailed = true
     }
     if (mailerFailed && !env.RESEND_API_KEY) {
-      return json(502, { error: 'Could not send that. Please try again.' })
+      return json(503, { error: 'Could not send that. Please try again.' })
     }
   }
 
@@ -121,11 +125,11 @@ export async function onRequest(context) {
       if (!res.ok) {
         const detail = await res.text().catch(() => '')
         console.error(`[delete-account] Resend returned ${res.status}: ${detail}`)
-        return json(502, { error: 'Could not send that. Please try again.' })
+        return json(503, { error: 'Could not send that. Please try again.' })
       }
     } catch (err) {
       console.error('[delete-account] Resend send failed:', err)
-      return json(502, { error: 'Could not send that. Please try again.' })
+      return json(503, { error: 'Could not send that. Please try again.' })
     }
     return json(200, { ok: true })
   }
