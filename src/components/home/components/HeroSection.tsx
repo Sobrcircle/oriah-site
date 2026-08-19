@@ -27,12 +27,11 @@ export default function HeroSection({ section }: Props) {
           <p className="home-brand-kicker">light of God</p>
           <img
             className="home-logo"
-            src="/assets/circle.png"
+            src="/assets/logo-mark.png"
             alt="Oriah logo"
           />
           <h1 className="home-brand">Oriah</h1>
           <p className="home-tagline">Walk in the light.</p>
-          <p className="home-pronunciation">pronounced oh-RYE-ah</p>
         </div>
 
         <div className="home-hero-divider" aria-hidden="true" />

@@ -13,37 +13,42 @@ export type HomeSection = {
   kicker?: string
   content: TextSpan[][]
   phoneImage?: string
-  /** Marks a section as describing something not yet shipped. */
-  upcoming?: boolean
 }
 
 /**
- * Site copy, rewritten 2026-08-18 to describe the app that exists rather than
- * the one that was planned when this site launched.
+ * Site copy, rewritten 2026-08-19.
  *
- * What changed, and why — every one of these was a claim the app no longer
- * backs:
+ * WHAT THE RESEARCH SAID
  *
- *  - "Private by invitation" / "share a code" / "No friend requests. No
- *    followers. No way for strangers to find you." The Uncapping (2026-07-17)
- *    made circles uncapped and free, and connection now happens by @handle,
- *    share link, QR, or opt-in discovery. Contact matching exists. So "no way
- *    for strangers to find you" was not a promise the code kept. The true and
- *    stronger claim is that being findable is not the same as being reachable:
- *    every connection is still yours to accept.
- *  - The Bible was missing entirely, and it is the largest thing the app
- *    gained since this copy was written — the whole BSB, on the device,
- *    offline.
- *  - Daily Reading, Days Walked and Messages were all missing too.
- *  - Verified Churches was written as though it had shipped. It has not, and
- *    it now says so instead of quietly implying otherwise.
- *  - Nothing said what the app costs or how it is paid for. A faith app that
- *    is coy about money has a problem.
+ * Hallow leads with "Find Peace in Prayer" — four words, an outcome, no
+ * jargon — and navigates with concrete nouns: Bible, How to Pray, Parishes &
+ * Schools. Glorify leads with "Grow with God. Everyday." and names its
+ * sections Daily Devotional, Build Your Daily Rhythm, Community.
  *
- * No price appears anywhere on this page on purpose. The subscription is
- * priced regionally by the stores ($6.99 USD, $9.99 CAD, £5.99, and so on),
- * and the app itself never hardcodes a number for the same reason — see
- * `paywallBillingDisclaimer` in the Flutter repo.
+ * Three things both do that this site was not doing:
+ *
+ *   1. They name God in the first line. They do not open by saying what they
+ *      are NOT. "Not a church app. Not Christian social media." spent the
+ *      most valuable line on the page arguing with a category instead of
+ *      making a promise.
+ *   2. Their section titles are plain nouns describing what is inside. Ours
+ *      were one-word brand abstractions — "Rhythm", "Word", "Share" — which
+ *      mean something once you already use the app and nothing before that.
+ *   3. Nothing is titled after a policy. The old copy had a whole section
+ *      arguing that circles are uncapped and explaining how people connect.
+ *      That is SobrCircle's fight, inherited wholesale; a reader assumes
+ *      unlimited friends and does not need the mechanics of @handles and QR
+ *      codes on a landing page.
+ *
+ * Also gone: the pronunciation line. It taught the reader a word before it
+ * gave them a reason to care about it.
+ *
+ * Every section carries a screenshot, and Why Oriah runs last before the
+ * signup so the argument closes before the ask.
+ *
+ * Verified Churches was cut. It is not built, it had no screenshot, and a
+ * concise page cannot afford a section about something that does not exist.
+ * Put it back when it ships.
  */
 export const sections: HomeSection[] = [
   {
@@ -51,90 +56,59 @@ export const sections: HomeSection[] = [
     type: 'hero',
     title: 'Oriah',
     content: [
-      [{ type: 'plain', text: 'Not a church app. Not Christian social media.' }],
-      [{ type: 'accent', text: 'A faith operating system for your daily walk.' }],
-      [{ type: 'plain', text: 'Pray. Word. Serve. No ads, no algorithm, and nothing between you and the people you trust.' }],
+      [{ type: 'accent', text: 'Follow Jesus, one ordinary day at a time.' }],
+      [{ type: 'plain', text: 'Pray for your people. Sit with Scripture. Serve in the quiet ways that matter.' }],
+      [{ type: 'plain', text: 'No ads. No algorithm. Nothing between you and God.' }],
     ],
     phoneImage: '/assets/app-today.webp',
   },
   {
-    id: 'rhythm',
+    id: 'morning',
     kicker: 'Today',
     type: 'feature',
-    title: 'Pray. Word. Serve.',
+    title: 'Every morning',
     content: [
-      [{ type: 'callout', text: 'The daily walk needs a daily rhythm.' }],
-      [{ type: 'plain', text: 'Oriah opens on the day itself: how long you have been walking, a passage chosen for this morning, and a short reflection you can finish before the coffee is done.' }],
-      [{ type: 'accent', text: 'No algorithm. No trending tab. Nothing deciding what you see.' }],
+      [{ type: 'callout', text: 'A passage, a thought, and how long you have been walking.' }],
+      [{ type: 'plain', text: 'Oriah opens on the day itself — not a feed. One reading, one reflection, short enough to finish before the coffee is done.' }],
+      [{ type: 'accent', text: 'Nothing is deciding what you see.' }],
     ],
     phoneImage: '/assets/app-reading.webp',
   },
   {
-    id: 'word',
+    id: 'bible',
     kicker: 'Word',
     type: 'feature',
-    title: 'The whole Bible, already on your phone',
+    title: 'The Bible',
     content: [
-      [{ type: 'callout', text: 'All 66 books. No account, no signal, no paywall.' }],
-      [{ type: 'plain', text: 'The Berean Standard Bible ships inside the app and reads offline — in a basement, on a plane, at 3am with one bar. Search any phrase instantly. Highlight a verse, keep a note on it, or send it to someone as a prayer.' }],
+      [{ type: 'callout', text: 'All 66 books, on your phone, offline.' }],
+      [{ type: 'plain', text: 'Search any phrase. Highlight a verse, keep a note on it, or send it to someone as a prayer. No account, no signal, no paywall.' }],
       [{ type: 'accent', text: 'Scripture you own, not scripture you stream.' }],
     ],
     phoneImage: '/assets/app-word.webp',
   },
   {
-    id: 'circles',
+    id: 'prayer',
     kicker: 'Share',
     type: 'feature',
-    title: 'Private circles',
+    title: 'Pray for your people',
     content: [
-      [{ type: 'callout', text: 'The people you actually know, and no one else.' }],
-      [{ type: 'plain', text: 'Bring in your family, your Bible study, your accountability group — by @handle, a share link, or a QR code across the table. Your circle is uncapped and free, and it is that way for everyone.' }],
-      [{ type: 'accent', text: 'Being findable is not being reachable. Every connection is yours to accept.' }],
+      [{ type: 'callout', text: 'The handful of people who actually know you.' }],
+      [{ type: 'plain', text: 'Your family, your Bible study, your accountability group. Ask for prayer, answer it, or just say the thing you could not say anywhere else.' }],
+      [{ type: 'accent', text: 'Private by default. Every connection is yours to accept.' }],
     ],
     phoneImage: '/assets/app-messages.webp',
   },
   {
-    id: 'reflect',
+    id: 'journal',
     kicker: 'Reflect',
     type: 'feature',
-    title: 'The part that should not be performed',
+    title: 'Between you and God',
     content: [
-      [{ type: 'callout', text: 'Growth requires honesty. Honesty requires safety.' }],
-      [{ type: 'plain', text: 'Prayers, reflections, confessions, gratitude — written by hand or spoken as a voice note, tagged with how you actually arrived rather than how you would like to sound.' }],
-      [{ type: 'accent', text: 'Between you and God. Never part of the feed.' }],
+      [{ type: 'callout', text: 'Growth needs honesty. Honesty needs somewhere safe.' }],
+      [{ type: 'plain', text: 'Prayers, confessions, gratitude — written or spoken aloud, tagged with how you actually arrived rather than how you would like to sound.' }],
+      [{ type: 'accent', text: 'Never part of the feed. Not now, not ever.' }],
     ],
-    phoneImage: '/assets/app-reflect.webp',
-  },
-  {
-    id: 'support',
-    kicker: 'Support',
-    type: 'feature',
-    title: 'Free where it counts',
-    content: [
-      [{ type: 'callout', text: 'Scripture, prayer, journal and your circle are free. Permanently.' }],
-      [{ type: 'plain', text: 'Nothing about the daily walk sits behind a price, and your circle has never had a cap. Supporters unlock what creates work for everyone else — starting your own small groups, hosting your own prayer rooms — and keep Oriah ad-free and open to the person who cannot pay.' }],
-      [{ type: 'accent', text: 'We sell a subscription, not your data. There is no second business model here.' }],
-    ],
-  },
-  {
-    id: 'churches',
-    kicker: 'Coming',
-    type: 'feature',
-    title: 'Verified churches',
-    upcoming: true,
-    content: [
-      [{ type: 'callout', text: 'Churches can be found. People cannot.' }],
-      [{ type: 'plain', text: 'Verified congregations will be able to publish service times, events and a church code — so someone new to a city can find a church without any individual becoming a searchable profile.' }],
-      [{ type: 'accent', text: 'Not built yet. It is next, and it is written here so you can hold us to it.' }],
-    ],
-  },
-  {
-    id: 'beta',
-    type: 'beta',
-    title: 'Walk with us',
-    content: [
-      [{ type: 'plain', text: 'Oriah is in private beta with a small group of believers. Leave your email and we will send you an invitation.' }],
-    ],
+    phoneImage: '/assets/app-journal.webp',
   },
   {
     id: 'story',
@@ -142,9 +116,17 @@ export const sections: HomeSection[] = [
     title: 'Why Oriah',
     content: [
       [{ type: 'plain', text: 'Christians are scattered across group chats, social feeds and church tools that were never built for the daily walk.' }],
-      [{ type: 'plain', text: 'Oriah exists to reverse that — one place for prayer, scripture, honesty, and the handful of people who actually know you.' }],
+      [{ type: 'plain', text: 'Oriah exists to reverse that — one place for prayer, Scripture, honesty, and the people who actually know you. Scripture, prayer and your journal are free, permanently. Supporters keep it ad-free and open to the person who cannot pay.' }],
       [{ type: 'accent', text: 'Choose what you see. Walk in the light.' }],
     ],
-    phoneImage: '/assets/app-journal.webp',
+    phoneImage: '/assets/app-scripture.webp',
+  },
+  {
+    id: 'beta',
+    type: 'beta',
+    title: 'Walk with us',
+    content: [
+      [{ type: 'plain', text: 'Oriah is in private beta. Leave your email and we will send you an invitation.' }],
+    ],
   },
 ]

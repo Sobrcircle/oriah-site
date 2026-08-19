@@ -1215,3 +1215,18 @@ html {
     transform: none;
   }
 }
+
+/* Verse attribution on the splash. Small, muted, and set apart from the
+   verse itself — an attribution that competes with the line it credits is
+   worse than none. */
+.preloader-cite {
+  display: block;
+  margin-top: 1.4rem;
+  font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-style: normal;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(196, 168, 130, 0.55);
+}

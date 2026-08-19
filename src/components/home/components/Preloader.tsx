@@ -37,7 +37,7 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
 
     // Safety net: if GSAP stalls (e.g. tab backgrounded mid-tween),
     // guarantee the curtain lifts so the site stays usable.
-    const failsafe = window.setTimeout(finish, 5500)
+    const failsafe = window.setTimeout(finish, 4000)
 
     // If the user tries to interact (tap, scroll, swipe), skip straight
     // to the site — a preloader should never feel like a wall.
@@ -50,10 +50,10 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
     tl.fromTo(
       lineRef.current,
       { opacity: 0, y: 16, filter: 'blur(8px)' },
-      { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.4, ease: 'power2.out' }
+      { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.0, ease: 'power2.out' }
     )
-      .to(lineRef.current, { opacity: 0.8, duration: 0.6 }, '+=0.9')
-      .to(lineRef.current, { opacity: 0, y: -8, duration: 0.8, ease: 'power2.in' })
+      .to(lineRef.current, { opacity: 0.85, duration: 0.4 }, '+=0.5')
+      .to(lineRef.current, { opacity: 0, y: -8, duration: 0.6, ease: 'power2.in' })
       .to(
         curtainRef.current,
         { y: '-100%', duration: 1.1, ease: 'power3.inOut' },
@@ -76,9 +76,17 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
   return (
     <div ref={curtainRef} className="preloader" aria-hidden="true">
       <div ref={lineRef} className="preloader-line">
-        <span>we choose what we see.</span>
+        {/* The verse the tagline comes from, in the BSB wording the app
+            itself bundles. It replaced "we choose what we see." — a line
+            that was abstract, said nothing about God, and duplicated the
+            closing accent in Why Oriah. Scripture is the product; opening
+            on it is the most honest thing this screen can do. */}
+        <span>If we walk in the light</span>
         <br />
-        <span>walk in the light.</span>
+        <span>as He is in the light,</span>
+        <br />
+        <span>we have fellowship with one another.</span>
+        <cite className="preloader-cite">1 John 1:7</cite>
       </div>
     </div>
   )

@@ -14,6 +14,13 @@ const PUBLIC_DIR = path.join(ROOT, 'public')
 const ASSETS_DIR = path.join(PUBLIC_DIR, 'assets')
 const BRANDING_DIR = path.join(ROOT, 'branding')
 const SOURCE_ICON = path.join(BRANDING_DIR, 'oriah-icon-source.png')
+// 2026-08-19 — the favicon, apple-touch icon, OG card and the logo the site
+// itself renders now come from the BARE cross, not the app-icon tile. The
+// tile has a rounded-square black background, so everywhere a logo appears
+// small and out of context — a browser tab, a Google result, a shared link —
+// it read as "an icon in a box" rather than a mark. This source is the same
+// cross with a transparent background.
+const SOURCE_MARK = path.join(BRANDING_DIR, 'oriah-mark-source.png')
 
 const BG = '#0a0a0a'
 const SURFACE = '#121212'
@@ -650,20 +657,30 @@ function renderOg(mark: Awaited<ReturnType<typeof buildMark>>, serif: string) {
   return canvas.toBuffer('image/png')
 }
 
+/** The bare cross, centred on a transparent square, at any size. */
+async function buildLogoMark(size: number) {
+  const image = await loadImage(SOURCE_MARK)
+  const canvas = createCanvas(size, size)
+  const ctx = canvas.getContext('2d')
+  const pad = size * 0.14
+  const inner = size - pad * 2
+  const scale = Math.min(inner / image.width, inner / image.height)
+  const w = image.width * scale
+  const h = image.height * scale
+  ctx.drawImage(image, (size - w) / 2, (size - h) / 2, w, h)
+  return canvas
+}
+
 async function main() {
   await fs.mkdir(ASSETS_DIR, { recursive: true })
   const serif = await pickSerif()
   const mark = await buildMark()
+  const logo512 = await buildLogoMark(512)
 
   await fs.writeFile(path.join(ASSETS_DIR, 'circle.png'), mark.toBuffer('image/png'))
 
-  const favicon = createCanvas(64, 64)
-  const faviconCtx = favicon.getContext('2d')
-  faviconCtx.drawImage(mark, 0, 0, 64, 64)
-
-  const appleIcon = createCanvas(180, 180)
-  const appleCtx = appleIcon.getContext('2d')
-  appleCtx.drawImage(mark, 0, 0, 180, 180)
+  const favicon = await buildLogoMark(64)
+  const appleIcon = await buildLogoMark(180)
 
   await Promise.all([
     fs.writeFile(path.join(PUBLIC_DIR, 'favicon-dark-64.png'), favicon.toBuffer('image/png')),
@@ -674,7 +691,8 @@ async function main() {
     fs.writeFile(path.join(ASSETS_DIR, '4.png'), renderScreenChurches()),
     fs.writeFile(path.join(ASSETS_DIR, '5.png'), renderScreenJournal()),
     fs.writeFile(path.join(ASSETS_DIR, '6.png'), renderScreenProfile(mark, serif)),
-    fs.writeFile(path.join(ASSETS_DIR, 'og-share.png'), renderOg(mark, serif)),
+    fs.writeFile(path.join(ASSETS_DIR, 'logo-mark.png'), logo512.toBuffer('image/png')),
+    fs.writeFile(path.join(ASSETS_DIR, 'og-share.png'), renderOg(logo512, serif)),
   ])
 
   console.log('[brand-assets] wrote Oriah brand assets')

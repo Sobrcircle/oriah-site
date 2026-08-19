@@ -3,7 +3,7 @@ export default function SiteFooter() {
     <footer className="home-footer">
       <div className="home-footer-inner">
         <div className="home-footer-brand">
-          <img className="home-footer-logo" src="/assets/circle.png" alt="Oriah logo" />
+          <img className="home-footer-logo" src="/assets/logo-mark.png" alt="Oriah logo" />
           <div>
             <p className="home-footer-name">Oriah</p>
             <p className="home-footer-tagline">Walk in the light.</p>
