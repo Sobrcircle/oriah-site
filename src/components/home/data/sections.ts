@@ -43,8 +43,18 @@ export type HomeSection = {
  * Also gone: the pronunciation line. It taught the reader a word before it
  * gave them a reason to care about it.
  *
- * Every section carries a screenshot, and Why Oriah runs last before the
- * signup so the argument closes before the ask.
+ * Every section carries a screenshot, and Why runs last before the signup so
+ * the argument closes before the ask.
+ *
+ * FLOW PASS. Each section now hands to the next rather than ending on itself:
+ * morning closes on the shared passage and opens the Bible; the Bible closes
+ * on sending a verse to someone and opens the people; the people close on what
+ * you tell no one but God and open the journal. Two closers were cut for
+ * saying the same thing twice — "Nothing is deciding what you see" repeated
+ * the hero's "No algorithm", and "Choose what you see" repeated that. And
+ * Why's middle paragraph carried three ideas in the longest block on the page,
+ * immediately before the ask; it is three short beats now, closing on the
+ * tagline.
  *
  * Verified Churches was cut. It is not built, it had no screenshot, and a
  * concise page cannot afford a section about something that does not exist.
@@ -69,8 +79,8 @@ export const sections: HomeSection[] = [
     title: 'Every morning',
     content: [
       [{ type: 'callout', text: 'A passage, a thought, and how long you have been walking.' }],
-      [{ type: 'plain', text: 'Oriah opens on the day itself — not a feed. One reading, one reflection, short enough to finish before the coffee is done.' }],
-      [{ type: 'accent', text: 'Nothing is deciding what you see.' }],
+      [{ type: 'plain', text: 'Oriah opens on the day itself, not a feed. One reading, one reflection, finished before the coffee is.' }],
+      [{ type: 'accent', text: 'The same passage as everyone else. Your own walk through it.' }],
     ],
     phoneImage: '/assets/app-reading.webp',
   },
@@ -81,7 +91,7 @@ export const sections: HomeSection[] = [
     title: 'The Bible',
     content: [
       [{ type: 'callout', text: 'All 66 books, on your phone, offline.' }],
-      [{ type: 'plain', text: 'Search any phrase. Highlight a verse, keep a note on it, or send it to someone as a prayer. No account, no signal, no paywall.' }],
+      [{ type: 'plain', text: 'Search any phrase. Highlight a verse, keep a note on it, or send it to someone who needs it today.' }],
       [{ type: 'accent', text: 'Scripture you own, not scripture you stream.' }],
     ],
     phoneImage: '/assets/app-word.webp',
@@ -93,8 +103,8 @@ export const sections: HomeSection[] = [
     title: 'Pray for your people',
     content: [
       [{ type: 'callout', text: 'The handful of people who actually know you.' }],
-      [{ type: 'plain', text: 'Your family, your Bible study, your accountability group. Ask for prayer, answer it, or just say the thing you could not say anywhere else.' }],
-      [{ type: 'accent', text: 'Private by default. Every connection is yours to accept.' }],
+      [{ type: 'plain', text: 'Your family, your Bible study, the friend who asks the hard question. Ask for prayer, answer it, or say the thing you could not say anywhere else.' }],
+      [{ type: 'accent', text: 'Some things, though, you say to no one but God.' }],
     ],
     phoneImage: '/assets/app-messages.webp',
   },
@@ -105,7 +115,7 @@ export const sections: HomeSection[] = [
     title: 'Between you and God',
     content: [
       [{ type: 'callout', text: 'Growth needs honesty. Honesty needs somewhere safe.' }],
-      [{ type: 'plain', text: 'Prayers, confessions, gratitude — written or spoken aloud, tagged with how you actually arrived rather than how you would like to sound.' }],
+      [{ type: 'plain', text: 'Prayers, confessions, gratitude — written or spoken aloud, however you actually arrived.' }],
       [{ type: 'accent', text: 'Never part of the feed. Not now, not ever.' }],
     ],
     phoneImage: '/assets/app-journal.webp',
@@ -113,11 +123,12 @@ export const sections: HomeSection[] = [
   {
     id: 'story',
     type: 'feature',
-    title: 'Why Oriah',
+    title: 'Why',
     content: [
       [{ type: 'plain', text: 'Christians are scattered across group chats, social feeds and church tools that were never built for the daily walk.' }],
-      [{ type: 'plain', text: 'Oriah exists to reverse that — one place for prayer, Scripture, honesty, and the people who actually know you. Scripture, prayer and your journal are free, permanently. Supporters keep it ad-free and open to the person who cannot pay.' }],
-      [{ type: 'accent', text: 'Choose what you see. Walk in the light.' }],
+      [{ type: 'plain', text: 'Oriah is one place for prayer, Scripture, honesty, and the people who actually know you.' }],
+      [{ type: 'plain', text: 'The daily walk is free, permanently. Supporters keep it ad-free and open to whoever cannot pay.' }],
+      [{ type: 'accent', text: 'Walk in the light.' }],
     ],
     phoneImage: '/assets/app-scripture.webp',
   },

@@ -14,11 +14,11 @@ export default function SiteNav() {
         <img src="/assets/logo-mark.png" alt="" className="home-nav-logo" />
       </a>
       <div className="home-nav-group home-nav-group--right">
-        <a href="#story" onClick={scrollTo('story')}>Why Oriah</a>
+        <a href="#story" onClick={scrollTo('story')}>Why</a>
         {/* Plain text like every other item. A pill-shaped CTA up here pulled
             the eye away from the page before it had said anything, and the
             signup already closes the page. Concrete nouns throughout —
-            "Today", "Bible", "Why Oriah" mean something to someone who has
+            "Today", "Bible", "Why" mean something to someone who has
             never opened the app; "Rhythm" and "Word" did not. */}
         <a href="#beta" onClick={scrollTo('beta')}>Beta</a>
       </div>
