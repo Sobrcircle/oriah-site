@@ -76,6 +76,13 @@ export async function onRequest(context) {
     `Submitted from: ${request.headers.get('referer') || 'direct'}`,
   ].join('\n')
 
+  // Try the keyless path, then fall THROUGH to Resend rather than returning
+  // its error — see the note in beta.js. Cloudflare Email Sending is an
+  // open-beta feature enabled per account, so the binding can exist and still
+  // be unable to send. On this page that matters more than anywhere else: a
+  // deletion request must not be lost because a preferred transport was
+  // wired up but not yet working.
+  let mailerFailed = false
   if (env.MAILER) {
     try {
       const res = await env.MAILER.fetch('https://oriah-mailer/send', {
@@ -83,15 +90,16 @@ export async function onRequest(context) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ kind: 'delete-account', email, body }),
       })
-      if (!res.ok) {
-        console.error(`[delete-account] mailer returned ${res.status}`)
-        return json(502, { error: 'Could not send that. Please try again.' })
-      }
+      if (res.ok) return json(200, { ok: true })
+      console.error(`[delete-account] mailer returned ${res.status}`)
+      mailerFailed = true
     } catch (err) {
       console.error('[delete-account] mailer binding failed:', err)
+      mailerFailed = true
+    }
+    if (mailerFailed && !env.RESEND_API_KEY) {
       return json(502, { error: 'Could not send that. Please try again.' })
     }
-    return json(200, { ok: true })
   }
 
   if (env.RESEND_API_KEY) {

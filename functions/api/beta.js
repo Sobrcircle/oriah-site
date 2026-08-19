@@ -82,7 +82,17 @@ export async function onRequest(context) {
     `Referer: ${request.headers.get('referer') || 'direct'}`,
   ].join('\n')
 
-  if (env.MAILER) return sendViaBinding(env, email, meta)
+  // Try the keyless path, then fall THROUGH to Resend if it fails rather
+  // than returning its error. Cloudflare Email Sending is an open-beta
+  // feature that has to be enabled per account, so a MAILER binding can be
+  // present and still be unable to send. Preferring the binding absolutely
+  // would mean wiring it up silently disables a Resend path that works —
+  // the setup step breaks the thing it was meant to improve.
+  if (env.MAILER) {
+    const viaBinding = await sendViaBinding(env, email, meta)
+    if (viaBinding.ok || !env.RESEND_API_KEY) return viaBinding
+    console.error('[beta] mailer failed, falling back to Resend')
+  }
   if (env.RESEND_API_KEY) return sendViaResend(env, email, meta)
 
   // Loud in the log, vague to the visitor: a misconfigured server is our
