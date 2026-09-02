@@ -31,6 +31,36 @@ const ACCENT = '#d1b48d'
 const ACCENT_SOFT = 'rgba(209, 180, 141, 0.16)'
 const LINE = 'rgba(255, 255, 255, 0.08)'
 
+// Sora is Oriah's typeface (see the app's ThemeData fontFamily). It must be
+// REGISTERED before use: @napi-rs/canvas resolves only families given to
+// GlobalFonts, so `ctx.font = '... OriahSans'` matched nothing and every
+// glyph rendered as an empty box. That is why og-share.png shipped as tofu
+// and why the link preview looked broken everywhere it was pasted.
+function registerSans(): string {
+  const weights: Array<[string, string]> = [
+    ['scripts/fonts/Sora-Regular.ttf', 'OriahSans'],
+    ['scripts/fonts/Sora-Medium.ttf', 'OriahSans'],
+    ['scripts/fonts/Sora-SemiBold.ttf', 'OriahSans'],
+    ['scripts/fonts/Sora-Bold.ttf', 'OriahSans'],
+  ]
+  let registered = false
+  for (const [rel, family] of weights) {
+    try {
+      GlobalFonts.registerFromPath(path.join(ROOT, rel), family)
+      registered = true
+    } catch {
+      continue
+    }
+  }
+  if (!registered) {
+    throw new Error(
+      'Sora not found in scripts/fonts/. Refusing to generate assets with an ' +
+        'unregistered family — that silently produces tofu boxes rather than failing.',
+    )
+  }
+  return 'OriahSans'
+}
+
 async function pickSerif(): Promise<string> {
   const candidates = [
     path.join(ROOT, 'scripts/fonts/Times New Roman.ttf'),
@@ -248,16 +278,16 @@ function drawScreenHeader(
   subtitle?: string,
 ) {
   ctx.fillStyle = MUTED
-  ctx.font = '500 22px sans-serif'
+  ctx.font = '500 22px OriahSans'
   ctx.fillText('Oriah', 44, 38)
 
   ctx.fillStyle = TEXT
-  ctx.font = '600 38px sans-serif'
+  ctx.font = '600 38px OriahSans'
   ctx.fillText(title, 44, 78)
 
   if (subtitle) {
     ctx.fillStyle = MUTED
-    ctx.font = '500 18px sans-serif'
+    ctx.font = '500 18px OriahSans'
     ctx.fillText(subtitle, 44, 116)
   }
 }
@@ -281,7 +311,7 @@ function drawChip(
   )
   strokeRoundedRect(ctx, x, y, width, 38, 19, active ? 'rgba(209, 180, 141, 0.35)' : LINE)
   ctx.fillStyle = active ? ACCENT : MUTED
-  ctx.font = '600 16px sans-serif'
+  ctx.font = '600 16px OriahSans'
   ctx.fillText(text, x + 16, y + 24)
 }
 
@@ -299,14 +329,14 @@ function drawCard(
   strokeRoundedRect(ctx, x, y, width, height, 28, LINE)
 
   ctx.fillStyle = TEXT
-  ctx.font = '600 22px sans-serif'
+  ctx.font = '600 22px OriahSans'
   ctx.fillText(title, x + 22, y + 34)
 
   ctx.fillStyle = 'rgba(255, 255, 255, 0.05)'
   ctx.fillRect(x + 22, y + 52, width - 44, 1)
 
   ctx.fillStyle = MUTED
-  ctx.font = '500 17px sans-serif'
+  ctx.font = '500 17px OriahSans'
   let lineY = y + 80
   for (const line of body) {
     for (const wrapped of wrapText(ctx, line, width - 44)) {
@@ -317,7 +347,7 @@ function drawCard(
 
   if (accentText) {
     ctx.fillStyle = ACCENT
-    ctx.font = '600 17px sans-serif'
+    ctx.font = '600 17px OriahSans'
     ctx.fillText(accentText, x + 22, y + height - 22)
   }
 }
@@ -330,7 +360,7 @@ function renderScreenSplash(mark: Awaited<ReturnType<typeof buildMark>>, serif: 
   ctx.drawImage(mark, 225, 210, 720, 720)
 
   ctx.fillStyle = ACCENT
-  ctx.font = '600 28px sans-serif'
+  ctx.font = '600 28px OriahSans'
   ctx.fillText('light of God', 455, 1045)
 
   ctx.fillStyle = TEXT
@@ -338,11 +368,11 @@ function renderScreenSplash(mark: Awaited<ReturnType<typeof buildMark>>, serif: 
   ctx.fillText('Oriah', 325, 1215)
 
   ctx.fillStyle = MUTED
-  ctx.font = '500 36px sans-serif'
+  ctx.font = '500 36px OriahSans'
   ctx.fillText('pronounced oh-RYE-ah', 370, 1295)
 
   ctx.fillStyle = TEXT
-  ctx.font = '600 42px sans-serif'
+  ctx.font = '600 42px OriahSans'
   ctx.fillText('Walk in the light.', 360, 1535)
 
   drawChip(ctx, 'Pray', 270, 1700, 170, true)
@@ -350,7 +380,7 @@ function renderScreenSplash(mark: Awaited<ReturnType<typeof buildMark>>, serif: 
   drawChip(ctx, 'Serve', 730, 1700, 170, true)
 
   ctx.fillStyle = MUTED
-  ctx.font = '500 28px sans-serif'
+  ctx.font = '500 28px OriahSans'
   ctx.fillText('No algorithm. No strangers. No noise.', 240, 1865)
 
   return canvas.toBuffer('image/png')
@@ -404,10 +434,10 @@ function renderScreenRhythm(mark: Awaited<ReturnType<typeof buildMark>>) {
   fillRoundedRect(ctx, 44, 1510, 1082, 200, 34, SURFACE_SOFT)
   strokeRoundedRect(ctx, 44, 1510, 1082, 200, 34, LINE)
   ctx.fillStyle = TEXT
-  ctx.font = '600 32px sans-serif'
+  ctx.font = '600 32px OriahSans'
   ctx.fillText('Complete the day in a few faithful minutes.', 78, 1592)
   ctx.fillStyle = MUTED
-  ctx.font = '500 22px sans-serif'
+  ctx.font = '500 22px OriahSans'
   ctx.fillText('Not more content. Just a better rhythm.', 78, 1638)
 
   return canvas.toBuffer('image/png')
@@ -437,7 +467,7 @@ function renderScreenCircle() {
   fillRoundedRect(ctx, 44, 590, 1082, 660, 30, SURFACE)
   strokeRoundedRect(ctx, 44, 590, 1082, 660, 30, LINE)
   ctx.fillStyle = TEXT
-  ctx.font = '600 24px sans-serif'
+  ctx.font = '600 24px OriahSans'
   ctx.fillText('Group room', 78, 642)
 
   const bubbles = [
@@ -449,7 +479,7 @@ function renderScreenCircle() {
   for (const bubble of bubbles) {
     fillRoundedRect(ctx, bubble.x, bubble.y, bubble.w, 108, 28, 'rgba(255, 255, 255, 0.05)')
     ctx.fillStyle = TEXT
-    ctx.font = '500 20px sans-serif'
+    ctx.font = '500 20px OriahSans'
     const lines = wrapText(ctx, bubble.text, bubble.w - 36)
     let y = bubble.y + 34
     for (const line of lines) {
@@ -545,7 +575,7 @@ function renderScreenJournal() {
   fillRoundedRect(ctx, 44, 530, 1082, 920, 34, SURFACE)
   strokeRoundedRect(ctx, 44, 530, 1082, 920, 34, LINE)
   ctx.fillStyle = TEXT
-  ctx.font = '600 28px sans-serif'
+  ctx.font = '600 28px OriahSans'
   ctx.fillText('Journal entry', 78, 594)
 
   const journalCopy = [
@@ -557,7 +587,7 @@ function renderScreenJournal() {
   ]
 
   ctx.fillStyle = MUTED
-  ctx.font = '500 24px sans-serif'
+  ctx.font = '500 24px OriahSans'
   let journalY = 668
   for (const paragraph of journalCopy) {
     if (!paragraph) {
@@ -600,10 +630,10 @@ function renderScreenProfile(mark: Awaited<ReturnType<typeof buildMark>>, serif:
   fillRoundedRect(ctx, 200, 690, 770, 220, 34, SURFACE)
   strokeRoundedRect(ctx, 200, 690, 770, 220, 34, LINE)
   ctx.fillStyle = ACCENT
-  ctx.font = '700 92px sans-serif'
+  ctx.font = '700 92px OriahSans'
   ctx.fillText('248', 470, 812)
   ctx.fillStyle = MUTED
-  ctx.font = '500 24px sans-serif'
+  ctx.font = '500 24px OriahSans'
   ctx.fillText('days walking with Oriah', 422, 856)
 
   drawCard(
@@ -631,28 +661,48 @@ function renderScreenProfile(mark: Awaited<ReturnType<typeof buildMark>>, serif:
   return canvas.toBuffer('image/png')
 }
 
-function renderOg(mark: Awaited<ReturnType<typeof buildMark>>, serif: string) {
+function renderOg(mark: Awaited<ReturnType<typeof buildMark>>, _serif: string) {
   const canvas = createCanvas(1200, 630)
   const ctx = canvas.getContext('2d')
   paintBackground(ctx, 1200, 630)
 
-  ctx.drawImage(mark, 72, 92, 220, 220)
+  // Matches the Play Store feature graphic so the link preview and the
+  // store listing read as one asset: glowing cross left, Sora lockup right.
+  // The cross GLOWS — a flat mark loses the brand's whole signature.
+  const cx = 300
+  const cy = 315
+  const size = 380
+
+  ctx.save()
+  ctx.shadowColor = 'rgba(255, 250, 240, 0.55)'
+  ctx.shadowBlur = 60
+  ctx.drawImage(mark, cx - size / 2, cy - size / 2, size, size)
+  ctx.shadowBlur = 26
+  ctx.drawImage(mark, cx - size / 2, cy - size / 2, size, size)
+  ctx.restore()
+  ctx.drawImage(mark, cx - size / 2, cy - size / 2, size, size)
+
+  const x = 560
+
+  ctx.font = '700 92px OriahSans'
+  ctx.fillStyle = TEXT
+  ctx.fillText('Ori', x, 288)
+  const oriWidth = ctx.measureText('Ori').width
+  ctx.fillStyle = ACCENT
+  ctx.fillText('ah', x + oriWidth, 288)
 
   ctx.fillStyle = ACCENT
-  ctx.font = '600 24px sans-serif'
-  ctx.fillText('joinoriah.com', 72, 364)
+  ctx.font = '600 33px OriahSans'
+  ctx.fillText('Walk in the light.', x, 352)
 
-  ctx.fillStyle = TEXT
-  ctx.font = `italic 84px ${serif}`
-  ctx.fillText('Oriah', 72, 404)
-
-  ctx.fillStyle = TEXT
-  ctx.font = '600 30px sans-serif'
-  ctx.fillText('A faith operating system for your daily walk.', 72, 500)
+  ctx.fillStyle = ACCENT
+  ctx.globalAlpha = 0.55
+  ctx.fillRect(x, 388, 110, 2)
+  ctx.globalAlpha = 1
 
   ctx.fillStyle = MUTED
-  ctx.font = '500 24px sans-serif'
-  ctx.fillText('Pray. Word. Serve. Walk in the light.', 72, 546)
+  ctx.font = '400 23px OriahSans'
+  ctx.fillText('P R A Y   \u00b7   W O R D   \u00b7   S E R V E', x, 428)
 
   return canvas.toBuffer('image/png')
 }
@@ -673,6 +723,7 @@ async function buildLogoMark(size: number) {
 
 async function main() {
   await fs.mkdir(ASSETS_DIR, { recursive: true })
+  registerSans()
   const serif = await pickSerif()
   const mark = await buildMark()
   const logo512 = await buildLogoMark(512)

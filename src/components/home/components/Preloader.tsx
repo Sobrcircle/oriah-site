@@ -37,7 +37,10 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
 
     // Safety net: if GSAP stalls (e.g. tab backgrounded mid-tween),
     // guarantee the curtain lifts so the site stays usable.
-    const failsafe = window.setTimeout(finish, 4000)
+    // Must stay comfortably ABOVE the timeline's own length (~4.3s), or it
+    // fires mid-sequence and cuts the verse off — which is what the 4000ms
+    // value did once the hold was lengthened for readability.
+    const failsafe = window.setTimeout(finish, 6000)
 
     // If the user tries to interact (tap, scroll, swipe), skip straight
     // to the site — a preloader should never feel like a wall.
@@ -52,7 +55,8 @@ export default function Preloader({ onDone }: { onDone: () => void }) {
       { opacity: 0, y: 16, filter: 'blur(8px)' },
       { opacity: 1, y: 0, filter: 'blur(0px)', duration: 1.0, ease: 'power2.out' }
     )
-      .to(lineRef.current, { opacity: 0.85, duration: 0.4 }, '+=0.5')
+      // Hold long enough to finish reading the last line before it lifts.
+      .to(lineRef.current, { opacity: 0.85, duration: 0.4 }, '+=1.5')
       .to(lineRef.current, { opacity: 0, y: -8, duration: 0.6, ease: 'power2.in' })
       .to(
         curtainRef.current,
