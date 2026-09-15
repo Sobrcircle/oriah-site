@@ -44,3 +44,20 @@
 
 /assets/*.css
   Cache-Control: public, max-age=31536000, immutable
+
+# Universal / App Links association files (added 2026-09-15).
+#
+# Both were returning the SPA's index.html — Cloudflare Pages falls back to
+# index.html for any path with no real file, so Android fetched
+# assetlinks.json and got HTML, and iOS fetched the AASA and got HTML. Both
+# platforms refuse to verify on that, which is why joinoriah.com links showed
+# a chooser instead of opening the app despite the entitlement and the
+# intent-filters being correct all along. Adding the real files fixes the
+# fallback; these headers make the content type explicit rather than inherited.
+/.well-known/assetlinks.json
+  Content-Type: application/json
+  Cache-Control: public, max-age=300
+
+/.well-known/apple-app-site-association
+  Content-Type: application/json
+  Cache-Control: public, max-age=300

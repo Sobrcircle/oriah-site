@@ -1,0 +1,14 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.moradilabs.oriah",
+      "sha256_cert_fingerprints": [
+        "F0:20:A4:3E:11:89:D5:E3:75:77:3F:95:6A:D4:29:B1:90:4D:1C:3A:92:C7:12:78:4A:4C:7A:4F:B2:0D:AE:E6",
+        "8E:85:E5:AE:CE:D6:48:E7:31:E9:27:39:25:C9:13:B1:65:8A:0C:0D:4E:90:3A:51:E9:20:B5:D7:A2:D0:E5:2A",
+        "84:67:77:A3:71:4B:FC:EC:88:30:4A:0A:62:B2:27:B7:77:AD:26:57:0A:B7:4C:F4:0B:CB:66:14:32:97:13:3A"
+      ]
+    }
+  }
+]

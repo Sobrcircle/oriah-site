@@ -1,0 +1,12 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["5HK7R2C7P5.com.moradilabs.oriah"],
+        "components": [
+          { "/": "/link/*", "comment": "Oriah share links open the app directly." }
+        ]
+      }
+    ]
+  }
+}
