@@ -75,11 +75,12 @@
 
         <h2>2. Age Requirement</h2>
         <p>
-          Oriah is intended only for adults age 18 and older. Age is
-          attested at signup, and the app carries an age rating on both the
-          App Store and Google Play that provides an operating-system-level
-          gate. We do not direct the service at children. If we learn that a
-          user is under 18, we delete the account and its data.
+          Oriah is intended for people age 13 and older. The app carries an
+          age rating on both the App Store and Google Play, and both stores
+          enforce a minimum account age. We do not direct the service at
+          children under 13 and do not knowingly collect their personal
+          information. If we learn that a user is under 13, we delete the
+          account and its data.
         </p>
 
         <h2>3. Reporting Inside the App</h2>
@@ -91,21 +92,24 @@
         </p>
         <p>
           Reports concerning a minor's safety, sexual content involving a
-          minor, or grooming behaviour are treated as the highest priority
-          and are escalated immediately rather than queued.
+          minor, or grooming behaviour are treated as the highest priority.
+          Every report reaches a human reviewer.
         </p>
 
         <h2>4. Detection</h2>
         <p>
-          Images uploaded to Oriah are scanned automatically. Content
-          matching known CSAM is quarantined at upload, before it becomes
-          visible to anyone else. Quarantine preserves the evidence required
-          for a lawful report while removing the material from circulation.
+          Every image uploaded to Oriah is scanned automatically by Google
+          Cloud Vision SafeSearch before it becomes visible to anyone else.
+          Content flagged as adult or violent is quarantined, which preserves
+          the evidence required for a lawful report while removing the
+          material from circulation. Hash-matching against known-CSAM
+          databases is not yet enabled; when it is, this page will say so.
         </p>
         <p>
-          Text content is scanned for indicators of grooming, solicitation,
-          and self-harm risk. Detection is a supplement to human review, not
-          a replacement for it.
+          Text content is screened automatically for indicators of self-harm
+          risk. We do not currently run a classifier for grooming or
+          solicitation; those rely on user reports and human review. Automated
+          detection is a supplement to human review, never a replacement.
         </p>
 
         <h2>5. Reporting to Authorities</h2>
