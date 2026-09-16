@@ -2,9 +2,18 @@
   "applinks": {
     "details": [
       {
-        "appIDs": ["5HK7R2C7P5.com.moradilabs.oriah"],
+        "appIDs": [
+          "5HK7R2C7P5.com.moradilabs.oriah"
+        ],
         "components": [
-          { "/": "/link/*", "comment": "Oriah share links open the app directly." }
+          {
+            "/": "/@*",
+            "comment": "Profile share links \u2014 https://joinoriah.com/@handle. This is the link the app itself generates for every user, so it must open the app."
+          },
+          {
+            "/": "/link/*",
+            "comment": "Oriah share links open the app directly."
+          }
         ]
       }
     ]
